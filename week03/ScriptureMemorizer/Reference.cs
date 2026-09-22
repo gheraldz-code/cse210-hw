@@ -11,18 +11,21 @@ public class Reference
         _verse = 0;
         _endVerse = 0;
     }
+
     public Reference(string book, int chapter, int verse) {
         _book = book;
         _chapter = chapter;
         _verse = verse;
         _endVerse = 0;
     }
+
     public Reference(string book, int chapter, int starVerse, int endVerse) {
         _book = book;
         _chapter = chapter;
         _verse = starVerse;
         _endVerse = endVerse;
     }
+    
     public string GetDisplayText()
     {
         if (_endVerse == 0) {

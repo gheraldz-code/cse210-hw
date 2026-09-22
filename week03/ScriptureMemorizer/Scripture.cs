@@ -8,12 +8,14 @@ public class Scripture
         _reference = reference;
         _words = new List<Word>();
         string[] splitText = text.Split(" ");
+
         foreach (string aWord in splitText)
         {
             Word theWord = new Word(aWord);
             _words.Add(theWord);
         }
     }
+
     public void HideRandomWords(int numberToHide)
     {
         // look for there are no hidden words
@@ -32,12 +34,13 @@ public class Scripture
             .Take(quantity) // the quantity of words to hide
             .ToList()
         ;
-        // here applies the change
+        
         foreach (var element in noHiddenWords)
         {
-            element.Hide();
+            element.Hide(); // here applies the change
         }
     }
+
     public string GetDisplayText()
     {
         string fullScripture = "";
@@ -47,6 +50,7 @@ public class Scripture
         }
         return $"{_reference.GetDisplayText()}>>{fullScripture}";
     }
+    
     public bool IsCompletelyHidden()
     {
         bool flag = true;

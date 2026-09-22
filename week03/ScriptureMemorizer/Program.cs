@@ -13,6 +13,7 @@ class Program
         //Scripture theScripture = new Scripture(aReference, textScripture);
         ScriptureGenerator theRandom = new ScriptureGenerator();
         Scripture theScripture = theRandom.GetRandomScripture();
+        
         Console.Clear();
         Console.WriteLine($"\n{theScripture.GetDisplayText()}");
         
