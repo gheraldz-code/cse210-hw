@@ -5,7 +5,7 @@ class Program
     static void Main(string[] args)
     {
         Console.Clear();
-        Console.WriteLine("Hello World! This is the YouTubeVideos Project.");
+        Console.WriteLine("Hello World! This is the YouTubeVideos Project.\n");
         string theTitle;
         string theAuthor;
         int theLength;
