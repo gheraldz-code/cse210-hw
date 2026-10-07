@@ -1,4 +1,4 @@
-public class Activity
+public class Activity // the parent class
 {
     private string _name;
     private string _description;
@@ -11,18 +11,22 @@ public class Activity
         _duration = duration;
     }
 
-    public void Start()
+    public int GetDuration()
     {
-        Console.WriteLine($"Starting {_name} for {_duration} seconds.");
-        Console.WriteLine(_description);
-        System.Threading.Thread.Sleep(_duration * 1000); // Wait for the specified duration
-        Console.WriteLine($"Finished {_name}.");
+        return _duration;
+    }
+
+    public string GetName()
+    {
+        return _name;
     }
 
     public void DisplayStartingMessage()
     {
         Console.WriteLine($"Welcome to the {_name}!");
+        Console.WriteLine();
         Console.WriteLine(_description);
+        Console.WriteLine();
     }
 
     public void DisplayEndingMessage()
@@ -30,11 +34,62 @@ public class Activity
         Console.WriteLine($"Thank you for participating in the {_name}.");
     }
 
-    public void ShowSpinner(int seconds){
+    public void ShowSpinner(int seconds)
+    {
+        List<string> animationStrings = new List<string>();
+        animationStrings.Add("|");
+        animationStrings.Add("/");
+        animationStrings.Add("-");
+        animationStrings.Add("\\");
 
+        DateTime startTime = DateTime.Now;
+        DateTime endTime = startTime.AddSeconds(seconds);
+
+        int i = 0;
+
+        while (DateTime.Now < endTime)
+        {
+            Console.Write(animationStrings[i]);
+            Thread.Sleep(250);
+            Console.Write("\b \b");
+
+            i++;
+
+            if (i >= animationStrings.Count)
+            {
+                i = 0;
+            }
+        }
     }
 
-    public void ShowCountdown(int seconds){
+    public void ShowCountdown(int seconds)
+    {
+        List<string> animationStrings = new List<string>();
+        animationStrings.Add("|");
+        animationStrings.Add("/");
+        animationStrings.Add("-");
+        animationStrings.Add("\\");
 
+        DateTime startTime = DateTime.Now;
+        DateTime endTime = startTime.AddSeconds(seconds);
+
+        int i = 0;
+
+        while (DateTime.Now < endTime)
+        {
+            string s = animationStrings[i];
+            Console.Write(s);
+            Thread.Sleep(1000);
+            Console.Write("\b \b");
+
+            i++;
+
+            if (i >= animationStrings.Count)
+            {
+                i = 0;
+            }
+        }
+
+        Console.WriteLine();
     }
 }

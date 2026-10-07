@@ -3,7 +3,12 @@ public class ReflectingActivity : Activity
     private List<string> _prompts;
     private List<string> _questions;
 
-    public ReflectingActivity(string name, string description) : base(name, description)
+    private List<string> _availablePrompts;
+    private List<string> _availableQuestions;
+    private Random _random = new Random();
+
+    public ReflectingActivity(string name, string description, int duration)
+        : base(name, description, duration)
     {
         _prompts = new List<string>
         {
@@ -20,24 +25,41 @@ public class ReflectingActivity : Activity
             "What emotions did you feel during this time?",
             "How can you apply the lessons learned to your future?"
         };
-    }
 
-    public void Run(){
-
+        _availablePrompts = new List<string>(_prompts);
+        _availableQuestions = new List<string>(_questions);
     }
 
     public string GetRandomPrompt()
     {
-        Random random = new Random();
-        int index = random.Next(_prompts.Count);
-        return _prompts[index];
+        if (_availablePrompts.Count == 0)
+        {
+            _availablePrompts = new List<string>(_prompts);
+        }
+
+        int index = _random.Next(_availablePrompts.Count);
+
+        string prompt = _availablePrompts[index];
+
+        _availablePrompts.RemoveAt(index);
+
+        return prompt;
     }
 
     public string GetRandomQuestion()
     {
-        Random random = new Random();
-        int index = random.Next(_questions.Count);
-        return _questions[index];
+        if (_availableQuestions.Count == 0)
+        {
+            _availableQuestions = new List<string>(_questions);
+        }
+
+        int index = _random.Next(_availableQuestions.Count);
+
+        string question = _availableQuestions[index];
+
+        _availableQuestions.RemoveAt(index);
+
+        return question;
     }
 
     public void DisplayPrompt()
@@ -52,26 +74,30 @@ public class ReflectingActivity : Activity
         Console.WriteLine($"Question: {question}");
     }
 
-    public void Start()
+    public void Run()
     {
-        Console.WriteLine("Welcome to the Reflecting Activity!");
-        Console.WriteLine("Take a moment to relax and focus on your breathing.");
-        Console.WriteLine("When you're ready, press Enter to continue...");
+        DisplayStartingMessage();
+
+        Console.WriteLine("Get ready...");
+        ShowSpinner(3);
+
+        Console.WriteLine();
+        DisplayPrompt();
+
+        Console.WriteLine();
+        Console.WriteLine("When you have something in mind, press Enter.");
         Console.ReadLine();
 
-        Random random = new Random();
-        string prompt = _prompts[random.Next(_prompts.Count)];
-        Console.WriteLine($"\nPrompt: {prompt}");
-        Console.WriteLine("Take a few moments to reflect on this prompt. Press Enter when you're ready for questions...");
-        Console.ReadLine();
+        DateTime startTime = DateTime.Now;
+        DateTime endTime = startTime.AddSeconds(GetDuration());
 
-        foreach (string question in _questions)
+        while (DateTime.Now < endTime)
         {
-            Console.WriteLine($"\nQuestion: {question}");
-            Console.WriteLine("Take your time to think about your answer. Press Enter when you're ready for the next question...");
+            DisplayQuestion();
+
+            Console.WriteLine();
+            Console.WriteLine("Press Enter when you are ready for the next question.");
             Console.ReadLine();
         }
-
-        Console.WriteLine("\nThank you for participating in the Reflecting Activity!");
     }
 }
